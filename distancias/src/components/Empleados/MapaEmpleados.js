@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const MapaEmpleados = props => {
     return (
         <div>
-            MapaEmpleados
+            {/* MapaEmpleados */}
         </div>
     );
 };
