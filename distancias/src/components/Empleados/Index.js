@@ -6,7 +6,7 @@ import MapaEmpleados from './MapaEmpleados';
 const Empleados = props => {
     return (
         <div>
-            <InformacionEmpleados/>
+            <InformacionEmpleados data={ props.data }/>
             <MapaEmpleados/>
         </div>
     );

@@ -3,68 +3,70 @@ import PropTypes from 'prop-types';
 import BootstrapTable from 'react-bootstrap-table-next';
 import './styles.css'
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import filterFactory, { textFilter ,Comparator } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter ,Comparator,numberFilter } from 'react-bootstrap-table2-filter';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 
-var empleados = [{
-      legajo: 1,
-      nombre: "Juan",
-      apellido: "Rosmirez",
-      direccion: "Albariño 1756",
-      distancia: "30Km",
-      codigoPostal: "1440",
-      localidad: "Mataderos",
-      provincia: "Buenos Aires",
-  },{
-      legajo: 2,
-      nombre: "Pedro",
-      apellido: "Perez",
-      direccion: "Lezica 200",
-      distancia: "45Km",
-      codigoPostal: "1556",
-      localidad: "Rafael Calzada",
-      provincia: "Buenos Aires",
-  }];
+const numberFilterLegajo = numberFilter({
+  
+  delay: 600,  // how long will trigger filtering after user typing, default is 500 ms
+  placeholder: 'custom placeholder',  // placeholder for number input
+  withoutEmptyComparatorOption: false,  // dont render empty option for comparator
+  withoutEmptyNumberOption: false,  // dont render empty option for numner select if it is defined
+  comparators: [Comparator.LE],  // Custom the comparators
+  style: { display: 'inline-grid' },  // custom the style on number filter
+  className: 'custom-numberfilter-class',  // custom the class on number filter
+  comparatorStyle: { widht:'0px',height:'0px',visibility:'hidden' }, // custom the style on comparator select
+  defaultValue: {comparator: Comparator.LE }  // default value
+})
 
-const numberFilterLegajo = textFilter({
-  defaultValue: '1', // default filtering value
-  comparator: Comparator.EQ, // default is Comparator.LIKE
-  caseSensitive: true, // default is false, and true will only work when comparator is LIKE
-  style: { visibility: 'hidden' }, // your custom styles on input
-  delay: 1000 // how long will trigger filtering after user typing, default is 500 ms
-});
 const columns = [{
   dataField: 'legajo',
   text: 'Legajo',
+  filter: textFilter(),
+}, {
+  dataField: 'calle',
+  text: 'Calle',
+  filter: textFilter(),
+}, {
+  dataField: 'numero',
+  text: 'Numero',
+  filter: textFilter(),
+}, {
+  dataField: 'nombreEmpleado',
+  text: 'Nombre',
+  filter: textFilter(),
+}, {
+  dataField: 'apellidoEmpleado',
+  text: 'Apellido',
+  filter: textFilter(),
+   headerStyle: {
+  }
+},{
+  dataField: 'distancia',
+  text: 'Distancia',
+  filter: numberFilterLegajo,
+},{
+  dataField: 'sede',
+  text: 'Sede',
   filter: numberFilterLegajo,
 }, {
-  dataField: 'nombre',
-  text: 'Nombre'
-}, {
-  dataField: 'apellido',
-  text: 'Apellido'
-}, {
-  dataField: 'direccion',
-  text: 'Direccion'
-}, {
-  dataField: 'distancia',
-  text: 'Distancia'
-}, {
   dataField: 'codigoPostal',
-  text: 'Codigo postal'
+  text: 'Codigo postal',
+  filter: textFilter(),
 }, {
   dataField: 'localidad',
-  text: 'Localidad'
+  text: 'Localidad',
+  filter: textFilter(),
 }, {
   dataField: 'provincia',
-  text: 'Provincia'
+  text: 'Provincia',
+  filter: textFilter(),
 }];
-
-
-
+const CaptionElement = () => <h3 style={{ borderRadius: '0.25em', textAlign: 'center', color: 'black', border: '1px solid black', padding: '0.5em' }}>Empleados</h3>;
 const InformacionEmpleados = props => {
     return (
-        <div className="Informacion-Empleados">
-            <BootstrapTable keyField='id' data={ empleados } columns={ columns } filter={ filterFactory() }  />
+        <div>
+            <BootstrapTable keyField='id' data={ props.data } columns={ columns } caption={<CaptionElement />} filter={ filterFactory() } pagination={ paginationFactory() }  />
         </div>
     );
 };
